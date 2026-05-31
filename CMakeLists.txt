@@ -23,3 +23,12 @@ target_include_directories(srs_lib PUBLIC include)
 # ── Main executable ────────────────────────────────────────────────────────
 add_executable(srs_demo src/main.cpp)
 target_link_libraries(srs_demo PRIVATE srs_lib)
+
+# ── Tests ──────────────────────────────────────────────────────────────────
+enable_testing()
+
+add_executable(srs_tests tests/test_sched.cpp)
+target_include_directories(srs_tests PRIVATE tests)
+target_link_libraries(srs_tests PRIVATE srs_lib)
+
+add_test(NAME unit_tests COMMAND srs_tests)
