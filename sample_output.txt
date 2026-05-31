@@ -1,0 +1,65 @@
+ankiaga@CGSCLXR91688923:/mnt/c/Users/ankiaga/Documents/service_recovery/build$ cmake ..
+-- The CXX compiler identification is GNU 13.3.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done (3.1s)
+-- Generating done (0.5s)
+-- Build files have been written to: /mnt/c/Users/ankiaga/Documents/service_recovery/build
+ankiaga@CGSCLXR91688923:/mnt/c/Users/ankiaga/Documents/service_recovery/build$ cmake --build .
+[ 16%] Building CXX object CMakeFiles/srs_lib.dir/src/sched.cpp.o
+[ 33%] Linking CXX static library libsrs_lib.a
+[ 33%] Built target srs_lib
+[ 50%] Building CXX object CMakeFiles/srs_demo.dir/src/main.cpp.o
+[ 66%] Linking CXX executable srs_demo
+[ 66%] Built target srs_demo
+[ 83%] Building CXX object CMakeFiles/srs_tests.dir/tests/test_sched.cpp.o
+[100%] Linking CXX executable srs_tests
+[100%] Built target srs_tests
+ankiaga@CGSCLXR91688923:/mnt/c/Users/ankiaga/Documents/service_recovery/build$ ./srs_demo
+
+=== Simulating failures ===
+
+[2026-05-31T09:09:01Z] ACTION RESTART on service 'auth-service'
+[2026-05-31T09:09:01Z] ACTION RESTART on service 'auth-service'
+[2026-05-31T09:09:01Z] ACTION STOP on service 'auth-service'
+[2026-05-31T09:09:01Z] ACTION DISABLE on service 'auth-service'
+
+[2026-05-31T09:09:01Z] ACTION STOP on service 'db-proxy'
+[2026-05-31T09:09:01Z] ACTION DISABLE on service 'db-proxy'
+
+[2026-05-31T09:09:01Z] ACTION RESTART on service 'worker'
+[2026-05-31T09:09:01Z] ACTION RESTART on service 'worker'
+[info] worker recovered — resetting state
+[2026-05-31T09:09:01Z] ACTION RESTART on service 'worker'
+
+=== Current service states ===
+  worker  failures=1  level=1  last_action=RESTART  exhausted=no
+  db-proxy  failures=2  level=2  last_action=DISABLE  exhausted=no
+  auth-service  failures=4  level=3  last_action=DISABLE  exhausted=yes
+ankiaga@CGSCLXR91688923:/mnt/c/Users/ankiaga/Documents/service_recovery/build$ ./srs_tests
+=== Service Recovery Scheduler — Unit Tests ===
+
+  [PASS] action_name returns labels
+  [PASS] record rejects empty list
+  [PASS] record advances on failure
+  [PASS] record repeats last action
+  [PASS] record reset clears state
+  [PASS] single action becomes exhausted
+  [PASS] scheduler rejects null exec
+  [PASS] scheduler rejects empty name
+  [PASS] scheduler rejects empty sequence
+  [PASS] scheduler rejects duplicate add
+  [PASS] scheduler has_service reflects add
+  [PASS] scheduler dispatches in order
+  [PASS] scheduler unknown service throws
+  [PASS] scheduler get_state reflects history
+  [PASS] scheduler get_state unknown throws
+  [PASS] scheduler reset restores initial
+  [PASS] scheduler reset unknown throws
+  [PASS] scheduler for_each visits all
+  [PASS] scheduler handles many services
+
+19 passed, 0 failed (19 total)
